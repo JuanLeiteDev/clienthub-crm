@@ -2,7 +2,7 @@ import sqlite3
 
 from pathlib import Path
 
-DB_PATH = Path(__file__).parent.parent / "database" / "database.db"
+DB_PATH = Path(__file__).parent.parent / "database" / "clienthub.db"
 
 def get_connection():
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
