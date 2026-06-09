@@ -24,7 +24,7 @@ def init_db():
                        email TEXT NOT NULL,
                        phone TEXT NOT NULL,
                        status TEXT NOT NULL CHECK(status IN ('lead', 'em contato', 'cliente', 'perdido')),
-                       create_date TEXT DEFAULT CURRENT_TIMESTAMP
+                       created_at TEXT DEFAULT CURRENT_TIMESTAMP
                        );""")
         
         cursor.execute("""CREATE TABLE IF NOT EXISTS interaction (
@@ -33,6 +33,7 @@ def init_db():
                        communication TEXT NOT NULL CHECK(communication IN('call', 'email', 'whatsapp', 'meeting')),
                        description TEXT NOT NULL,
                        date TEXT NOT NULL,
+                       created_at TEXT DEFAULT CURRENT_TIMESTAMP
 
                        FOREIGN KEY (client_id) REFERENCES clients (id)
                             ON DELETE CASCADE
@@ -42,9 +43,10 @@ def init_db():
                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                        client_id INTEGER NOT NULL,
                        title TEXT NOT NULL,
-                       date_limit TEXT NOT NULL,
+                       due_date TEXT NOT NULL,
                        completed TEXT NOT NULL DEFAULT 'False' CHECK(completed IN('True', 'False')),
-
+                       created_at TEXT DEFAULT CURRENT_TIMESTAMP
+                       
                        FOREIGN KEY (client_id) REFERENCES clients (id)
                             ON DELETE CASCADE 
                        );""")
