@@ -61,7 +61,7 @@ def get_client(id: int):
 @app.route('/api/clients/<id>', methods=["PUT"])
 def update_client(id: int):
     data = request.get_json(silent=True)
-    if not data: return jsonify({"message": "failed", "errors": "Preencha todos os campos."}), 400
+    if not data: return jsonify({"message": "failed", "errors": "Preencha os campos obrigatórios."}), 400
     if not id: return jsonify({"message": "failed", "errors": "ID do cliente não especificado."}), 400
 
     try:
@@ -101,26 +101,29 @@ def validate_client(data):
         elif len(name) > 100: errors["name"] = "Campo nome não pode conter mais de 100 caracteres."
 
         enterprise = str(data.get("enterprise", "")).strip()
-        if not enterprise: errors["enterprise"] = "Preencha o campo empresa."
+        if not enterprise: enterprise = None
         elif len(enterprise) > 50: errors["enterprise"] = "Campo empresa não pode conter mais de 50 caracteres."
 
         email = str(data.get("email", "")).strip()
-        if not email: errors["email"] = "Preencha o campo email."
-        try:
-            valid = validate_email(email)
-        except Exception:
-            errors["email"] = "O email inserido não é válido."
+        if not email: email = None
+        else:
+            try:
+                valid = validate_email(email)
+                email = valid.email
+            except Exception:
+                errors["email"] = "O email inserido não é válido."
 
         phone = str(data.get("phone", "")).strip()
-        if not phone: errors["phone"] = "Preencha o campo telefone."
-        try:
-            phone_obg = pn.parse(phone)
-            if not pn.is_valid_number(phone_obg):
+        if not phone: phone = None
+        else:
+            try:
+                phone_obg = pn.parse(phone)
+                if not pn.is_valid_number(phone_obg):
+                    errors["phone"] = "Número de telefone inválido."
+                
+                phone = pn.format_number(phone_obg, pn.PhoneNumberFormat.E164)
+            except pn.NumberParseException:
                 errors["phone"] = "Número de telefone inválido."
-            
-            phone = pn.format_number(phone_obg, pn.PhoneNumberFormat.E164)
-        except pn.NumberParseException:
-            errors["phone"] = "Número de telefone inválido."
 
         status = str(data.get("status", "")).strip().lower()
         if not status: errors["status"] = "Preencha o campos estado."

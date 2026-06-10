@@ -21,9 +21,9 @@ def init_db():
         cursor.execute("""CREATE TABLE IF NOT EXISTS clients (
                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                        name TEXT NOT NULL,
-                       enterprise TEXT NOT NULL,
-                       email TEXT NOT NULL,
-                       phone TEXT NOT NULL,
+                       enterprise TEXT,
+                       email TEXT,
+                       phone TEXT,
                        status TEXT NOT NULL CHECK(status IN ('lead', 'em contato', 'cliente', 'perdido')),
                        created_at TEXT DEFAULT CURRENT_TIMESTAMP
                        );""")
