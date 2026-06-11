@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    outline: none;
+    border: none;
 }
 
 html {
@@ -10,7 +12,15 @@ html {
 }
 
 body {
+    display: flex;
+    flex-flow: column nowrap;
+    overflow-x: hidden;
+    justify-content: start;
+    align-items: stretch;
+    min-width: 100vw;
+    min-height: 100vh;
     background-color: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font-main);
+    position: relative;
 }

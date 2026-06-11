@@ -1,0 +1,10 @@
+#filters {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--color-surface-dark);
+    min-height: 100vh;
+    z-index: 1000;
+    width: 400px;
+}

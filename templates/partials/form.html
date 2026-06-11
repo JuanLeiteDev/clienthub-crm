@@ -1,0 +1,78 @@
+<section id="sec-form-clients">
+    <h2>Cadastrar novo cliente</h2>
+    <form method="post" autocomplete="off" id="form-clients">
+        <div class="block-input">
+            <label for="name">Nome: </label>
+            <div class="container-input">
+                <i class="fa-solid fa-user icon-input"></i>
+                <input 
+                    type="text" 
+                    name="name" 
+                    id="name" 
+                    class="input-form-clients" 
+                    required 
+                    maxlength="100"
+                >
+            </div>
+        </div>
+        <div class="block-input">
+            <label for="enterprise">Empresa: </label>
+            <div class="container-input">
+                <i class="fa-solid fa-building icon-input"></i>
+                <input
+                    type="text"
+                    name="enterprise" 
+                    id="enterprise" 
+                    class="input-form-clients"
+                    maxlength="50"
+                >
+            </div>
+        </div>
+        <div class="block-input">
+            <label for="email">Email: </label>
+            <div class="container-input">
+                <i class="fa-solid fa-inbox icon-input"></i>
+                <input 
+                    type="email" 
+                    name="email" 
+                    id="email" 
+                    class="input-form-clients"
+                >
+            </div>
+        </div>
+        <div class="block-input">
+            <label for="phone">Telefone: </label>
+            <div class="container-input">
+                <i class="fa-solid fa-phone icon-input"></i>
+                <input 
+                    type="text" 
+                    name="phone" 
+                    id="phone" 
+                    class="input-form-clients"
+                >
+            </div>
+        </div>
+        <div class="block-input">
+            <label for="status">Estado: </label>
+            <div class="container-input">
+                <i class="fa-solid fa-circle icon-input"></i>
+                <select 
+                    id="status" 
+                    name="status" 
+                    class="input-form-clients"
+                    required
+                >
+                    <option value="" selected>Selecione</option>
+                    <option value="lead">Lead</option>
+                    <option value="em contato">Em contato</option>
+                    <option value="cliente">Cliente</option>
+                    <option value="perdido">Perdido</option>
+                </select>
+            </div>
+        </div>
+        <div class="block-btn">
+            <button class="btn-form" id="btn-reset" type="reset">Limpar</button>
+            <button class="btn-form" id="btn-submit" type="submit">Enviar</button>
+        </div>
+    </form>
+</section>
