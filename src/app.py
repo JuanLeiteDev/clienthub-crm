@@ -19,7 +19,7 @@ def get_clients():
     clients = database.list_clients()
     
     response = {
-        "message": "sucesse",
+        "sucesse": True,
         "clients": clients
     }
 
@@ -31,14 +31,14 @@ def create_client():
     errors, new_data = validate_client(data)
 
     if errors:
-        return jsonify({"message": "failed", "errors": errors}), 400
+        return jsonify({"sucesse": False, "errors": errors}), 400
     
 
     new_client = database.create_client(new_data)
-    if not new_client: return jsonify({"message": "failed", "errors": "Cliente não foi inserido na base de dados."}), 400
+    if not new_client: return jsonify({"sucesse": False, "errors": "Cliente não foi inserido na base de dados."}), 400
 
     response = {
-        "message": "sucesse",
+        "sucesse": True,
         "clients": new_client
     }
 
@@ -49,46 +49,46 @@ def get_client(id: int):
     client = database.get_one_client(id)
     if not client: 
         return jsonify({
-            "message": "failed", 
+            "sucesse": False, 
             "errors": "Cliente não encontrado."
         }), 404
 
     return jsonify({
-        "message": "sucesse",
+        "sucesse": True,
         "clients": client
     }), 200
 
 @app.route('/api/clients/<id>', methods=["PUT"])
 def update_client(id: int):
     data = request.get_json(silent=True)
-    if not data: return jsonify({"message": "failed", "errors": "Preencha os campos obrigatórios."}), 400
-    if not id: return jsonify({"message": "failed", "errors": "ID do cliente não especificado."}), 400
+    if not data: return jsonify({"sucesse": False, "errors": "Preencha os campos obrigatórios."}), 400
+    if not id: return jsonify({"sucesse": False, "errors": "ID do cliente não especificado."}), 400
 
     try:
         id = int(id)
     except Exception:
-        return jsonify({"message": "failed", "errors": "ID do cliente inválido."}), 400
+        return jsonify({"sucesse": False, "errors": "ID do cliente inválido."}), 400
 
     errors, new_data = validate_client(data)
     if errors:
-        return jsonify({"message": "failed", "errors": errors}), 400
+        return jsonify({"sucesse": False, "errors": errors}), 400
     
     new_data["id"] = id
     
     client = database.update_client(new_data)
-    if not client: return jsonify({"message": "failed", "errors": "Cliente não atualizado."}), 404
-    else: return jsonify({"message": "sucesse", "clients": client}), 200
+    if not client: return jsonify({"sucesse": False, "errors": "Cliente não atualizado."}), 404
+    else: return jsonify({"sucesse": True, "clients": client}), 200
 
 @app.route("/api/clients/<id>", methods=["DELETE"])
 def delete_client(id: int):
-    if not id: return jsonify({"message": "failed", "errors": "ID do cliente não especificado."}), 400
+    if not id: return jsonify({"sucesse": False, "errors": "ID do cliente não especificado."}), 400
     try:
         id = int(id)
     except Exception:
-        return jsonify({"message": "failed", "errors": "ID do cliente inválido."}), 400
+        return jsonify({"sucesse": False, "errors": "ID do cliente inválido."}), 400
     
-    if database.delete_client(id): return jsonify({"message": "sucesse"}), 204
-    else: return jsonify({"message": "failed", "errors": "Cliente não encontrado."}), 404
+    if database.delete_client(id): return jsonify({"sucesse": True}), 204
+    else: return jsonify({"sucesse": False, "errors": "Cliente não encontrado."}), 404
 
 def validate_client(data):
     errors = {}
