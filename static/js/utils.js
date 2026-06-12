@@ -1,12 +1,18 @@
-const elementsMessage = {
+const elementsUtils = {
     msgBlock: document.querySelector('#sec-message'),
     msgField: document.querySelector('.message-field'),
     msgBtnField: document.querySelector('.btn-field'),
     msgBtnAccept: document.querySelector('#accept-btn-message'),
-    msgBtnCancel: document.querySelector('#cancel-btn-message')
+    msgBtnCancel: document.querySelector('#cancel-btn-message'),
 }
 
 let myTimer = null;
+let confirmResolver = null;
+
+function resetTimer() {
+    clearTimeout(myTimer); 
+    myTimer = null;
+}
 
 export function getInputValues(listOfInputs) {
     const inputValues = {};
@@ -20,73 +26,54 @@ export function getInputValues(listOfInputs) {
     return inputValues;
 }
 
-function createElementError() {
-    let errorElement = document.createElement('p');
-
-    errorElement.classList.add("error-element");
-    errorElement.style.marginTop = "5px";
-    errorElement.style.textAlign = "left";
-    errorElement.style.color = "rgb(255, 211, 211)";
-    errorElement.style.fontSize = "0.9rem";
-
-    return errorElement;
-}
-
-function resetTimer() {
-    clearTimeout(myTimer);
-}
-
 export function showMessage(msg, error=false, btnField=false) {
-    elementsMessage.msgBlock.classList.add('invisible');
-    resetTimer()
+    resetTimer();
+    elementsUtils.msgBlock.classList.add('invisible');
+    elementsUtils.msgField.innerText = msg;
 
     if(error){
-        elementsMessage.msgBlock.style.border = "1px solid red";
-        elementsMessage.msgBtnFiel.style.color = "red";
+        elementsUtils.msgBlock.style.border = "1px solid var(--color-danger-text)";
+        elementsUtils.msgBtnField.style.color = "var(--color-danger-text)";
     } else {
-        elementsMessage.msgBlock.style.border = "1px solid green";
-        elementsMessage.msgField.style.color = "green";
+        elementsUtils.msgBlock.style.border = "1px solid var(--color-success-text)";
+        elementsUtils.msgField.style.color = "var(--color-success-text)";
     }
 
     if(btnField){
-        elementsMessage.msgBtnField.style.display = "block";
+        elementsUtils.msgBtnField.style.display = "block";
+        elementsUtils.msgBlock.classList.remove('invisible');
     } else {
-        elementsMessage.msgBtnField.style.display = "none";
-    }
+        elementsUtils.msgBtnField.style.display = "none";
+        elementsUtils.msgBlock.classList.remove('invisible');
 
-    elementsMessage.msgField.innerText = msg;
-    elementsMessage.msgBlock.classList.remove('invisible');
-    myTimer = 3000;
-
-    setTimeout(() => {
-        elementsMessage.msgBlock.classList.add('invisible');
-    }, myTimer)
-}
-
-export function showErrorsFormClient(errorsObj) {
-    try {
-        let errorsList = Object.entries(errorsObj);
-
-        errorsList.forEach(([inputID, error]) => {
-            if(document.querySelector(`[data-error-id="${inputID}"]`)) return;
-
-            const errorElement = createElementError();
-            errorElement.setAttribute('data-error-id', `${inputID}`);
-
-            const input = document.querySelector(`#${inputID}`);
-            const container = input.closest(".block-input");
-
-            input.classList.add('error');
-
-            errorElement.innerText = error;
-            container.append(errorElement);
-        })
-    } catch (error) {
-        console.log(error);
+        myTimer = setTimeout(() => {
+            elementsUtils.msgBlock.classList.add('invisible');
+            myTimer = null;
+        }, 3000)
     }
 }
 
-export function cleanErrors() {
-    const errors = document.querySelectorAll('.error-element');
-    errors.forEach(error => error.remove());
+export function confirmMessage(msg, error=false) {
+    return new Promise(resolve => {
+        showMessage(msg, error, true);
+        confirmResolver = resolve;
+    });
 }
+
+elementsUtils.msgBtnAccept.addEventListener('click', () => {
+    elementsUtils.msgBlock.classList.add('invisible');
+
+    if(confirmResolver) {
+        confirmResolver(true);
+        confirmResolver = null;
+    }
+});
+
+elementsUtils.msgBtnCancel.addEventListener('click', () => {
+    elementsUtils.msgBlock.classList.add('invisible');
+
+    if(confirmResolver) {
+        confirmResolver(false);
+        confirmResolver = null;
+    }
+});

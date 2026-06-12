@@ -19,7 +19,7 @@ body {
     align-items: stretch;
     min-width: 100vw;
     min-height: 100vh;
-    background-color: var(--color-bg);
+    background-color: var(--color-surface-dark);
     color: var(--color-text);
     font-family: var(--font-main);
     position: relative;

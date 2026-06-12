@@ -35,32 +35,37 @@
     --color-border: #d2dde2;
     --color-border-strong: #a9bbc3;
 
-    /* Estados usando tons da mesma família */
-    --color-success-bg: #dcebea;
-    --color-success-text: #245c57;
+    /* Estados */
+    --color-success-bg: #bbf7d0;
+    --color-success-text: #166534;
 
-    --color-warning-bg: #e6e0d1;
-    --color-warning-text: #675934;
+    --color-warning-bg: #fde68a;
+    --color-warning-text: #92400e;
 
-    --color-danger-bg: #eadada;
-    --color-danger-text: #6b3434;
+    --color-danger-bg: #fecaca;
+    --color-danger-text: #991b1b;
 
-    --color-info-bg: #d7e8ee;
-    --color-info-text: #1f5f73;
+    --color-info-bg: #bfdbfe;
+    --color-info-text: #1e40af;
 
     /* Status CRM */
-    --status-lead-bg: #d7e8ee;
-    --status-lead-text: #1f5f73;
+    --status-lead-bg: #bae6fd;
+    --status-lead-text: #075985;
 
-    --status-contact-bg: #e6e0d1;
-    --status-contact-text: #675934;
+    --status-contact-bg: #fde68a;
+    --status-contact-text: #92400e;
 
-    --status-client-bg: #dcebea;
-    --status-client-text: #245c57;
+    --status-client-bg: #bbf7d0;
+    --status-client-text: #166534;
 
-    --status-lost-bg: #eadada;
-    --status-lost-text: #6b3434;
+    --status-lost-bg: #fecaca;
+    --status-lost-text: #991b1b;
 
     /* Tipografia */
     --font-main: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.error {
+    border: 1px solid var(--color-danger-text);
+    background-color: var(--color-danger-bg);
 }

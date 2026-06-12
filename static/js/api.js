@@ -12,7 +12,7 @@ async function parseResponse(response) {
     return newResponse
 }
 
-export async function create_client(request) {
+export async function clientCreate(request) {
     try {
         const response = await fetch('/api/clients', {
             method: "POST",
@@ -21,7 +21,20 @@ export async function create_client(request) {
         });
         return await parseResponse(response);
     } catch {
-        return {"sucesse": false, "message": "Erro de conexão com o servidor."}
+        return {"sucesse": false, "errors": "Erro de conexão com o servidor."}
     }
     
+}
+
+export async function clientsGet() {
+    try {
+        const response = await fetch("/api/clients", {
+            method: "GET",
+            headers: HEADER
+        });
+
+        return await parseResponse(response);
+    } catch {
+        return {"sucesse": false, "errors": "Erro de conexão com o servidor."}
+    }
 }
