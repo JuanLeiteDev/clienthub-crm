@@ -1,0 +1,23 @@
+#footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+    min-width: 100vw;
+    background-color: var(--color-bg-dark);
+}
+
+#footer > p {
+    color: var(--color-text-inverse);
+}
+
+.link-juan {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--color-text-inverse);
+}
+
+.link-juan:hover {
+    text-decoration: underline;
+}

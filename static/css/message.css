@@ -1,0 +1,53 @@
+#sec-message {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 20px);
+    padding: 10px;
+    width: 60vw;
+    display: flex;
+    border-radius: 8px;
+    flex-flow: column nowrap;
+    background-color: var(--color-surface);
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    transition: all 300ms ease;
+}
+
+#sec-message.invisible {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(-50%, -200px);
+}
+
+
+.message-field {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+.btn-field {
+    display: flex;
+    align-self: flex-end;
+    gap: 10px;
+}
+
+.btn-message {
+    text-align: center;
+    padding: 10px 30px;
+    width: 150px;
+    font-size: 1rem;
+    border-radius: 8px;
+}
+
+#accept-btn-message {
+    border: 1px solid var(--color-success-text);
+    background-color: var(--color-success-bg);
+}
+
+#cancel-btn-message {
+    border: 1px solid var(--color-danger-text);
+    background-color: var(--color-danger-bg);
+}

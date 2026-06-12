@@ -1,3 +1,71 @@
 :root {
-    
+    /* Fundos */
+    --color-bg: #e8eef2;
+    --color-bg-soft: #f4f7f9;
+    --color-bg-dark: #102a33;
+
+    /* Superfícies */
+    --color-surface: #ffffff;
+    --color-surface-soft: #f7fafb;
+    --color-surface-hover: #edf3f6;
+    --color-surface-dark: #183944;
+
+    /* Cor principal */
+    --color-primary: #1f5f73;
+    --color-primary-hover: #164958;
+    --color-primary-light: #d7e8ee;
+    --color-primary-soft: #eef6f8;
+
+    /* Cor secundária */
+    --color-secondary: #3f7f8f;
+    --color-secondary-hover: #326978;
+    --color-secondary-light: #cfe3e8;
+
+    /* Contraste */
+    --color-contrast: #0b1f27;
+    --color-contrast-soft: #244854;
+
+    /* Texto */
+    --color-text: #102a33;
+    --color-text-muted: #5f7680;
+    --color-text-light: #8aa0a8;
+    --color-text-inverse: #ffffff;
+
+    /* Bordas */
+    --color-border: #d2dde2;
+    --color-border-strong: #a9bbc3;
+
+    /* Estados */
+    --color-success-bg: #bbf7d0;
+    --color-success-text: #166534;
+
+    --color-warning-bg: #fde68a;
+    --color-warning-text: #92400e;
+
+    --color-danger-bg: #fecaca;
+    --color-danger-text: #991b1b;
+
+    --color-info-bg: #bfdbfe;
+    --color-info-text: #1e40af;
+
+    /* Status CRM */
+    --status-lead-bg: #bae6fd;
+    --status-lead-text: #075985;
+
+    --status-contact-bg: #fde68a;
+    --status-contact-text: #92400e;
+
+    --status-client-bg: #bbf7d0;
+    --status-client-text: #166534;
+
+    --status-lost-bg: #fecaca;
+    --status-lost-text: #991b1b;
+
+    /* Tipografia */
+    --font-main: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.error {
+    border: 1px solid var(--color-danger-text);
+    background-color: var(--color-danger-bg);
 }

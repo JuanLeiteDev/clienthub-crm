@@ -1,0 +1,75 @@
+#sec-form-clients {
+    grid-area: 2 / 1 / span 1 / span 1;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    align-items: stretch;
+    color: var(--color-text-inverse);
+    user-select: none;
+}
+
+#sec-form-clients h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: -10px;
+}
+
+.block-input {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    align-items: stretch;
+    margin: 20px 0;
+}
+
+.container-input {
+    display: flex;
+    margin-top: 5px;
+    background-color: var(--color-secondary-light);
+    padding: 8px;
+    border-radius: 8px;
+    gap: 10px;
+}
+
+.icon-input {
+    color: var(--color-text);
+    font-size: 1.5rem;
+    width: 25px;
+    margin: 2px;
+}
+
+.input-form-clients {
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    width: 100%;
+    border-radius: 5px;
+    margin: -4px -4px -4px 0;
+    padding: 5px 10px;
+    font-size: 1rem;
+    user-select: auto;
+}
+
+.input-form-clients::placeholder {
+    color: rgba(24, 57, 68, 0.7);
+}
+
+.block-btn {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-form {
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-secondary-light);
+    font-size: 1rem;
+    border-radius: 5px;
+    padding: 5px 30px;
+    transform: all 150ms ease;
+}
+
+.btn-form:hover {
+    background-color: var(--color-secondary-light);
+}
