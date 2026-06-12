@@ -82,12 +82,13 @@ def update_client(id: int):
 @app.route("/api/clients/<id>", methods=["DELETE"])
 def delete_client(id: int):
     if not id: return jsonify({"sucesse": False, "errors": "ID do cliente não especificado."}), 400
+
     try:
         id = int(id)
     except Exception:
         return jsonify({"sucesse": False, "errors": "ID do cliente inválido."}), 400
     
-    if database.delete_client(id): return jsonify({"sucesse": True}), 204
+    if database.delete_client(id): return jsonify({"sucesse": True}), 200
     else: return jsonify({"sucesse": False, "errors": "Cliente não encontrado."}), 404
 
 def validate_client(data):

@@ -1,17 +1,27 @@
-import { confirmMessage } from "./utils.js";
+import { confirmMessage, showMessage } from "./utils.js";
+import { clientGet, clientDelete, clientsList } from "./api.js";
+import { clientIsUpdate } from "./client_form.js";
 
 // ================================ ELEMENTS ================================
 const elementsList = {
     clientsListHTML: document.querySelector('#clients-list'),
     clientsList: [],
     currentClient: null,
-    currentEvent: null
 }
 
 const CLIENT_PROPERTY = ['name', 'enterprise', 'email', 'phone', 'status']
 
 // ================================ FUNCTIONS ================================
 export function clientCreateHTML() {
+    elementsList.clientsListHTML.innerHTML = `
+    <div class="client-header-list">
+        <p>Nome</p>
+        <p>Empresa</p>
+        <p>Email</p>
+        <p>Telefone</p>
+        <p>Estado</p>
+    </div>`
+
     elementsList.clientsList.forEach(clientObj => {
         clientCreateElement(clientObj);
     });
@@ -47,27 +57,37 @@ function clientCreateElement(clientObj) {
     btnEdit.setAttribute('type', 'button');
     btnEdit.innerText = "Editar";
 
-    
-
     btnDelete.addEventListener('click', async () => {
-        elementsList.currentClient = linkElement.getAttribute('data-client-id');
         const confirmed = await confirmMessage("Deseja mesmo deletar cliente?", true);
 
         if(confirmed) {
-            elementsList.currentEvent = "delete";
+            elementsList.currentClient = linkElement.getAttribute('data-client-id');
+            const response = await clientDelete(elementsList.currentClient);
+            if(response.sucesse){
+                elementsList.clientsList = elementsList.clientsList.filter(client => client.id != elementsList.currentClient);
+                showMessage("Cliente deletado com sucesso!");
+                clientCreateHTML()
+            } else {
+                showMessage("Erro ao tentar deletar cliente!", true);
+            }
         } else {
-            elementsList.currentEvent = null;
+            elementsList.currentClient = null;
         }
     })
 
     btnEdit.addEventListener('click', async () => {
-        elementsList.currentClient = linkElement.getAttribute('data-client-id');
         const confirmed = await confirmMessage("Deseja mesmo editar cliente?", true);
 
         if(confirmed) {
-            elementsList.currentEvent = "edit";
+            elementsList.currentClient = linkElement.getAttribute('data-client-id');
+            const data = await clientGet(elementsList.currentClient);
+            if(data.sucesse){
+                clientIsUpdate(data.clients[0]);
+            } else {
+                showMessage(data.errors, true);
+            } 
         } else {
-            elementsList.currentEvent = null;
+            elementsList.currentClient = null;
         }
     })
 
@@ -79,7 +99,7 @@ function clientCreateElement(clientObj) {
     elementsList.clientsListHTML.append(linkElement);
 }
 
-export function clientRender(clientsList) {
+function clientRender(clientsList) {
     clientsList.forEach(clientObj => {
         elementsList.clientsList.unshift(clientObj);
     });
@@ -87,13 +107,27 @@ export function clientRender(clientsList) {
 
 export function clientAddNew(clientNewObj) {
     elementsList.clientsList.unshift(clientNewObj);
-    elementsList.clientsListHTML.innerHTML = `
-    <div class="client-header-list">
-        <p>Nome</p>
-        <p>Empresa</p>
-        <p>Email</p>
-        <p>Telefone</p>
-        <p>Estado</p>
-    </div>`
     clientCreateHTML();
+}
+
+export function clientUpdateHTML(clientUpdated) {
+    elementsList.clientsList = elementsList.clientsList.map(client => {
+        if(client.id == clientUpdated.id) return clientUpdated;
+        return client;
+    });
+
+    clientCreateHTML();
+}
+
+export async function clientGetList() {
+    const list = await clientsList();
+
+    if(!list.sucesse){
+        showMessage("Erro ao tentar buscar clientes na base de dados.", true);
+    } else if (Object(list).length <= 0) {
+        console.log("ok");
+    } else {
+        clientRender(list.clients);
+        clientCreateHTML();
+    }
 }
