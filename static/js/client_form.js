@@ -77,7 +77,7 @@ async function clientSendFormCreate(data) {
         if(response.sucesse){
             clientCleanErrors();
             elementsForm.clientForm.reset();
-            showMessage("Cliente atualizado com sucesso!");
+            showMessage("Cliente criado com sucesso!");
             clientAddNew(response.clients[0]);
         } else {
             clientShowErrorsForm(response.errors);

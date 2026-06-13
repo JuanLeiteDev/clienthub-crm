@@ -5,14 +5,18 @@ import { clientIsUpdate } from "./client_form.js";
 // ================================ ELEMENTS ================================
 const elementsList = {
     clientsListHTML: document.querySelector('#clients-list'),
+    clientsSearch: document.querySelector('#search-client'),
+    clientsSelectStatus: document.querySelector('#select-status'),
+    clientListFilter: [],
     clientsList: [],
-    currentClient: null,
+    currentClient: null
 }
 
 const CLIENT_PROPERTY = ['name', 'enterprise', 'email', 'phone', 'status']
 
 // ================================ FUNCTIONS ================================
 export function clientCreateHTML() {
+    applyFilter();
     elementsList.clientsListHTML.innerHTML = `
     <div class="client-header-list">
         <p>Nome</p>
@@ -22,7 +26,7 @@ export function clientCreateHTML() {
         <p>Estado</p>
     </div>`
 
-    elementsList.clientsList.forEach(clientObj => {
+    elementsList.clientListFilter.forEach(clientObj => {
         clientCreateElement(clientObj);
     });
 }
@@ -130,4 +134,39 @@ export async function clientGetList() {
         clientRender(list.clients);
         clientCreateHTML();
     }
+}
+
+function applyFilter() {
+    elementsList.clientListFilter = searchFilter();
+    elementsList.clientListFilter = statusFilter();
+}
+
+function statusFilter() {
+    const value = (elementsList.clientsSelectStatus.value).toLowerCase();
+    if(value !== ""){
+        const newList = elementsList.clientListFilter.filter(client => 
+            client.status == value
+        );
+        return newList;
+    } else {
+        return elementsList.clientListFilter;
+    }
+}
+
+function searchFilter() {
+    const value = (elementsList.clientsSearch.value).toLowerCase();
+    if(value !== ""){
+        const newList = elementsList.clientsList.filter(client => 
+            client.name.toLowerCase().includes(value)
+        );
+        return newList;
+    } else {
+        return elementsList.clientsList;
+    }
+}
+
+// ================================ EVENTS ================================
+export function clientListEvents() {
+    elementsList.clientsSearch.addEventListener('input', clientCreateHTML);
+    elementsList.clientsSelectStatus.addEventListener('input', clientCreateHTML);
 }
