@@ -165,6 +165,21 @@ function searchFilter() {
     }
 }
 
+export function clientsMetrics() {
+    const data = {}
+    
+    data["total"] = elementsList.clientsList.length;
+    data["ativos"] = elementsList.clientsList.filter(client => client.status == 'lead').length;
+    data["fechados"] = elementsList.clientsList.filter(client => client.status == 'cliente').length;
+    data["perdidos"] = elementsList.clientsList.filter(client => client.status == 'perdido').length;
+    data["conversao"] = data.total > 0 ? (data["fechados"] / data["total"]) * 100 : 0;
+    data["pendentes"] = 0;
+    data["atrasadas"] = 0;
+    data["interacoes"] = 0;
+
+    return data
+}
+
 // ================================ EVENTS ================================
 export function clientListEvents() {
     elementsList.clientsSearch.addEventListener('input', clientCreateHTML);

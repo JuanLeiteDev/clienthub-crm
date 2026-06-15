@@ -1,5 +1,6 @@
 import { clientFormEvents } from "./client_form.js";
 import { clientGetList, clientListEvents } from "./client_list.js";
+import { metricsInit } from "./metrics.js";
 
 // ================================ ELEMENTS ================================
 const elements = {
@@ -7,10 +8,11 @@ const elements = {
 };
 
 // ================================ FUNCTIONS ================================
-function init() {
+async function init() {
     clientFormEvents();
     clientListEvents();
-    clientGetList();
+    await clientGetList();
+    metricsInit();
 }
 
 // ================================ EVENTS ================================
