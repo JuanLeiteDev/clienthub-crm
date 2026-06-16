@@ -1,6 +1,7 @@
 import { confirmMessage, showMessage } from "./utils.js";
 import { clientGet, clientDelete, clientsList } from "./api.js";
 import { clientIsUpdate } from "./client_form.js";
+import { metricsInit } from "./metrics.js";
 
 // ================================ ELEMENTS ================================
 const elementsList = {
@@ -16,6 +17,7 @@ const CLIENT_PROPERTY = ['name', 'enterprise', 'email', 'phone', 'status']
 
 // ================================ FUNCTIONS ================================
 export function clientCreateHTML() {
+    metricsInit();
     applyFilter();
     elementsList.clientsListHTML.innerHTML = `
     <div class="client-header-list">

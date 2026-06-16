@@ -17,6 +17,9 @@ const elementsHTML = {
 }
 
 function metricsCreateHTML() {
+    elementsHTML.containerCima.innerHTML = "";
+    elementsHTML.containerBaixo.innerHTML = "";
+
     let contador = 1;
     for(const key in elementsMetrics){
         const metricCard = document.createElement('div');
@@ -57,7 +60,7 @@ function metricsUpdate() {
     elementsMetrics.leadsAtivos.value = data.ativos;
     elementsMetrics.clientesFechados.value = data.fechados;
     elementsMetrics.clientesPerdidos.value = data.perdidos;
-    elementsMetrics.taxaConversao.value = String().concat(String(data.conversao), " %");
+    elementsMetrics.taxaConversao.value = String().concat(Number(data.conversao).toFixed(2), " %");
     elementsMetrics.tarefasPendentes.value = data.pendentes;
     elementsMetrics.tarefasAtrasadas.value = data.atrasadas;
     elementsMetrics.interacoesRegistradas.value = data.interacoes;

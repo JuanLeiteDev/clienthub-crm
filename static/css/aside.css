@@ -1,5 +1,5 @@
 #filters {
-    display: none;
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -7,4 +7,9 @@
     min-height: 100vh;
     z-index: 1000;
     width: 400px;
+    transform: translateX(0);
+}
+
+#filters.invisible-aside {
+    transform: translateX(-400px);
 }
