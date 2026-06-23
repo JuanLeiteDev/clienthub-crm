@@ -35,8 +35,8 @@ export function clientCreateHTML() {
 
 function clientCreateElement(clientObj) {
     const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', '#');
     linkElement.setAttribute('data-client-id', `${clientObj["id"]}`);
+    linkElement.setAttribute('href', `/clients/${clientObj["id"]}`);
     linkElement.classList.add('link-client');
 
     const divElement = document.createElement('div');

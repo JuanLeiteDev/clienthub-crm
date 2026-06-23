@@ -1,0 +1,46 @@
+<main id="client-page">
+    <section id="client-profile">
+        {% set status_class = client.status|lower|replace(' ', '-') if client.status else 'empty' %}
+
+        <div class="client-profile-header">
+            <div>
+                <p class="client-profile-id">Cliente #{{ client.id or "N/A" }}</p>
+                <h1>{{ client.name or "Cliente sem nome" }}</h1>
+                <p class="client-profile-enterprise">{{ client.enterprise or "Empresa não informada" }}</p>
+            </div>
+            <span class="client-status status-{{ status_class }}">
+                {{ client.status or "Sem estado" }}
+            </span>
+        </div>
+
+        <div class="client-details">
+            <div class="client-detail-item">
+                <span>Email</span>
+                {% if client.email %}
+                    <a href="mailto:{{ client.email }}">{{ client.email }}</a>
+                {% else %}
+                    <p>Não informado</p>
+                {% endif %}
+            </div>
+
+            <div class="client-detail-item">
+                <span>Telefone</span>
+                {% if client.phone %}
+                    <a href="tel:{{ client.phone }}">{{ client.phone }}</a>
+                {% else %}
+                    <p>Não informado</p>
+                {% endif %}
+            </div>
+
+            <div class="client-detail-item">
+                <span>Empresa</span>
+                <p>{{ client.enterprise or "Não informada" }}</p>
+            </div>
+
+            <div class="client-detail-item">
+                <span>Criado em</span>
+                <p>{{ client.created_at or "Não informado" }}</p>
+            </div>
+        </div>
+    </section>
+</main>
