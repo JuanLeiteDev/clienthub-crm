@@ -6,9 +6,9 @@
     background-color: var(--color-surface-dark);
     min-height: 100vh;
     z-index: 1000;
-    width: 400px;
+    width: min(400px, 100vw);
     transform: translateX(0);
-    transition: all 300ms ease;
+    transition: transform 300ms ease;
     border-right: 2px solid var(--color-bg-dark);
     flex-flow: column nowrap;
     justify-content: start;
@@ -17,7 +17,7 @@
 }
 
 #filters.invisible-aside {
-    transform: translateX(-400px);
+    transform: translateX(-100%);
 }
 
 .aside-nav {
@@ -60,4 +60,14 @@
 .aside-link i {
     width: 20px;
     text-align: center;
+}
+
+@media (max-width: 480px) {
+    #filters {
+        padding: 16px;
+    }
+
+    .aside-nav {
+        margin-top: 24px;
+    }
 }

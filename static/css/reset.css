@@ -17,10 +17,22 @@ body {
     overflow-x: hidden;
     justify-content: start;
     align-items: stretch;
-    min-width: 100vw;
+    width: 100%;
     min-height: 100vh;
+    min-height: 100svh;
     background-color: var(--color-surface-dark);
     color: var(--color-text);
     font-family: var(--font-main);
     position: relative;
+}
+
+img,
+svg {
+    max-width: 100%;
+}
+
+button,
+input,
+select {
+    font: inherit;
 }

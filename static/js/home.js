@@ -1,16 +1,11 @@
 import { clientFormEvents } from "./client_form.js";
 import { clientGetList, clientListEvents } from "./client_list.js";
 import { metricsInit } from "./metrics.js";
-
-// ================================ ELEMENTS ================================
-const elements = {
-    btnHeader: document.querySelectorAll('.btn-header-menu'),
-    asideHTML: document.querySelector('#filters')
-};
+import { navigationEvents } from "./navigation.js";
 
 // ================================ FUNCTIONS ================================
 async function initHome() {
-    homeEvents();
+    navigationEvents();
     clientFormEvents();
     clientListEvents();
     await clientGetList();
@@ -19,14 +14,4 @@ async function initHome() {
 
 // ================================ EVENTS ================================
 
-window.addEventListener('DOMContentLoaded', initHome )
-
-export function homeEvents() {
-    if(elements.btnHeader){
-        elements.btnHeader.forEach(button => {
-            button.addEventListener('click', () => {
-                elements.asideHTML.classList.toggle('invisible-aside');
-            });
-        });
-    }
-}
+window.addEventListener('DOMContentLoaded', initHome);

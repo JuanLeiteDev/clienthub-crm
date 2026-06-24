@@ -96,7 +96,7 @@ def delete_client(id: int):
 def client_page(id: int):
     client = database.get_one_client(id)
     if not client:
-        return "Cliente não encontrado", 404
+        return render_template("index.html")
     
     return render_template("client.html", client=client[0])
 
