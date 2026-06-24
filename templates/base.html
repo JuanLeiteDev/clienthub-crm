@@ -23,6 +23,6 @@
     {% block header %}{% endblock header %}
     {% block main %}{% endblock main %}
     {% block footer %}{% endblock footer %}
-    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block module %}{% endblock module %}
 </body>
 </html>

@@ -21,3 +21,8 @@
 {% block footer %}
     {% include "./partials/footer.html" %}   
 {% endblock footer %}
+
+{% block module %}
+    <script type="module" src="{{ url_for('static', filename='js/home.js') }}"></script> 
+{% endblock module %}
+

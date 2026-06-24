@@ -9,7 +9,8 @@ const elements = {
 };
 
 // ================================ FUNCTIONS ================================
-async function init() {
+async function initHome() {
+    homeEvents();
     clientFormEvents();
     clientListEvents();
     await clientGetList();
@@ -18,9 +19,14 @@ async function init() {
 
 // ================================ EVENTS ================================
 
-window.addEventListener('DOMContentLoaded', init);
-elements.btnHeader.forEach(button => {
-    button.addEventListener('click', () => {
-        elements.asideHTML.classList.toggle('invisible-aside');
-    });
-});
+window.addEventListener('DOMContentLoaded', initHome )
+
+export function homeEvents() {
+    if(elements.btnHeader){
+        elements.btnHeader.forEach(button => {
+            button.addEventListener('click', () => {
+                elements.asideHTML.classList.toggle('invisible-aside');
+            });
+        });
+    }
+}

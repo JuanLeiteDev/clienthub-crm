@@ -34,6 +34,9 @@ export function clientCreateHTML() {
 }
 
 function clientCreateElement(clientObj) {
+    const clientLine = document.createElement('div');
+    clientLine.classList.add('client-line');
+
     const linkElement = document.createElement('a');
     linkElement.setAttribute('data-client-id', `${clientObj["id"]}`);
     linkElement.setAttribute('href', `/clients/${clientObj["id"]}`);
@@ -99,10 +102,11 @@ function clientCreateElement(clientObj) {
 
     btnField.append(btnDelete);
     btnField.append(btnEdit);
-    divElement.append(btnField);
     linkElement.append(divElement);
+    clientLine.append(linkElement);
+    clientLine.append(btnField);
 
-    elementsList.clientsListHTML.append(linkElement);
+    elementsList.clientsListHTML.append(clientLine);
 }
 
 function clientRender(clientsList) {
@@ -184,6 +188,10 @@ export function clientsMetrics() {
 
 // ================================ EVENTS ================================
 export function clientListEvents() {
-    elementsList.clientsSearch.addEventListener('input', clientCreateHTML);
-    elementsList.clientsSelectStatus.addEventListener('input', clientCreateHTML);
+    if(elementsList.clientsSearch){
+        elementsList.clientsSearch.addEventListener('input', clientCreateHTML);
+    }
+    if(elementsList.clientsSelectStatus){
+        elementsList.clientsSelectStatus.addEventListener('input', clientCreateHTML);
+    }
 }

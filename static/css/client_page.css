@@ -1,5 +1,5 @@
 #client-page {
-    min-height: 100vh;
+    flex: 1;
     padding: 30px;
     background-color: var(--color-bg);
     color: var(--color-text);
@@ -79,6 +79,51 @@
     background-color: var(--color-surface-hover);
 }
 
+.client-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.client-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 110px;
+    padding: 9px 16px;
+    border-radius: 5px;
+    color: var(--color-text);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+
+.client-action-btn:active {
+    transform: scale(0.97);
+}
+
+.btn-edit-client {
+    border: 1px solid var(--color-primary);
+    background-color: var(--color-surface);
+}
+
+.btn-edit-client:hover {
+    color: var(--color-text-inverse);
+    background-color: var(--color-primary);
+}
+
+.btn-delete-client {
+    border: 1px solid var(--color-danger-text);
+    background-color: var(--color-danger-bg);
+}
+
+.btn-delete-client:hover {
+    color: var(--color-text-inverse);
+    background-color: var(--color-danger-text);
+}
+
 .client-details {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -113,6 +158,23 @@
     text-decoration: underline;
 }
 
+#client-page-form {
+    max-width: 900px;
+    margin: 20px auto 0;
+}
+
+#client-page-form.client-page-form-hidden {
+    display: none;
+}
+
+#client-page-form #sec-form-clients {
+    color: var(--color-text-inverse);
+    background-color: var(--color-surface-dark);
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+}
+
 @media (max-width: 700px) {
     #client-page {
         padding: 15px;
@@ -133,6 +195,14 @@
 
     .client-status {
         width: fit-content;
+    }
+
+    .client-actions {
+        flex-direction: column;
+    }
+
+    .client-action-btn {
+        width: 100%;
     }
 
     .client-details {

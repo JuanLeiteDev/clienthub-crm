@@ -4,9 +4,7 @@ import { clientAddNew, clientUpdateHTML } from "./client_list.js";
 
 // ================================ ELEMENTS ================================
 const elementsForm = {
-    clientForm: document.querySelector('#form-clients'),
     clientH2: document.querySelector('#sec-form-clients > h2'),
-    clientBtnInputs: document.querySelectorAll('.input-form-clients'),
     clientForm: document.querySelector('#form-clients'),
     clientBtnInputs: document.querySelectorAll('.input-form-clients'),
     clientUpdate: false,
@@ -14,12 +12,12 @@ const elementsForm = {
 };
 
 // ================================ FUNCTIONS ================================
-function clientCleanErrors() {
+export function clientCleanErrors() {
     const errors = document.querySelectorAll('.error-element');
     errors.forEach(error => error.remove());
 }
 
-function clientShowErrorsForm(errorsObj) {
+export function clientShowErrorsForm(errorsObj) {
     try {
         let errorsList = Object.entries(errorsObj);
 
@@ -130,14 +128,18 @@ export function clientIsUpdate(client=null) {
 
 // ================================ EVENTS ================================
 export function clientFormEvents() {
-    elementsForm.clientForm.addEventListener('submit', clientValidateForm);
+    if(elementsForm.clientForm){
+        elementsForm.clientForm.addEventListener('submit', clientValidateForm);
+    }
 
-    elementsForm.clientBtnInputs.forEach(btnInput => {
-        btnInput.addEventListener('input', () => {
-            if(btnInput.classList.contains('error')){
-                btnInput.classList.remove('error');
-                document.querySelector(`[data-error-id="${btnInput.id}"]`).remove();
-            }
+    if(elementsForm.clientBtnInputs){
+        elementsForm.clientBtnInputs.forEach(btnInput => {
+            btnInput.addEventListener('input', () => {
+                if(btnInput.classList.contains('error')){
+                    btnInput.classList.remove('error');
+                    document.querySelector(`[data-error-id="${btnInput.id}"]`).remove();
+                }
+            });
         });
-    });
+    }
 }
