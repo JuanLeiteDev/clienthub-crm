@@ -1,7 +1,7 @@
 import { confirmMessage, showMessage, getInputValues } from "./utils.js";
 import { clientIsUpdate, clientCleanErrors, clientShowErrorsForm} from "./client_form.js";
 import { clientDelete, clientUpdate } from "./api.js";
-import { homeEvents } from "./home.js";
+import { navigationEvents } from "./navigation.js";
 
 const elementsPage = {
     btnInputs: document.querySelectorAll('.input-form-clients'),
@@ -86,7 +86,7 @@ function clientPageEvents() {
         });
     }
 
-    homeEvents();
+    navigationEvents();
 }
 
 window.addEventListener('DOMContentLoaded', clientPageEvents);

@@ -20,13 +20,18 @@ export function clientCreateHTML() {
     metricsInit();
     applyFilter();
     elementsList.clientsListHTML.innerHTML = `
-    <div class="client-header-list">
-        <p>Nome</p>
-        <p>Empresa</p>
-        <p>Email</p>
-        <p>Telefone</p>
-        <p>Estado</p>
-    </div>`
+    <div class="line-header">
+        <div class="link-client">
+            <div class="client-card-header">
+                <p>Nome</p>
+                <p>Empresa</p>
+                <p>Email</p>
+                <p>Telefone</p>
+                <p>Status</p>
+            </div>
+        </div>
+    </div>
+    `
 
     elementsList.clientListFilter.forEach(clientObj => {
         clientCreateElement(clientObj);

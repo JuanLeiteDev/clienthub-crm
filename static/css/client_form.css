@@ -10,8 +10,8 @@
 
 #sec-form-clients h2 {
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: -10px;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 0;
 }
 
 .block-input {
@@ -72,4 +72,30 @@
 
 .btn-form:hover {
     background-color: var(--color-secondary-light);
+}
+
+@media (max-width: 768px) {
+    #sec-form-clients {
+        grid-area: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .block-input {
+        margin: 14px 0;
+    }
+
+    .container-input {
+        gap: 8px;
+    }
+
+    .block-btn {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .btn-form {
+        width: 100%;
+        padding: 10px 16px;
+    }
 }
