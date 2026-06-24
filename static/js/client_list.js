@@ -1,26 +1,45 @@
-import { confirmMessage } from "./utils.js";
+import { confirmMessage, showMessage } from "./utils.js";
+import { clientGet, clientDelete, clientsList } from "./api.js";
+import { clientIsUpdate } from "./client_form.js";
+import { metricsInit } from "./metrics.js";
 
 // ================================ ELEMENTS ================================
 const elementsList = {
     clientsListHTML: document.querySelector('#clients-list'),
+    clientsSearch: document.querySelector('#search-client'),
+    clientsSelectStatus: document.querySelector('#select-status'),
+    clientListFilter: [],
     clientsList: [],
-    currentClient: null,
-    currentEvent: null
+    currentClient: null
 }
 
 const CLIENT_PROPERTY = ['name', 'enterprise', 'email', 'phone', 'status']
 
 // ================================ FUNCTIONS ================================
 export function clientCreateHTML() {
-    elementsList.clientsList.forEach(clientObj => {
+    metricsInit();
+    applyFilter();
+    elementsList.clientsListHTML.innerHTML = `
+    <div class="client-header-list">
+        <p>Nome</p>
+        <p>Empresa</p>
+        <p>Email</p>
+        <p>Telefone</p>
+        <p>Estado</p>
+    </div>`
+
+    elementsList.clientListFilter.forEach(clientObj => {
         clientCreateElement(clientObj);
     });
 }
 
 function clientCreateElement(clientObj) {
+    const clientLine = document.createElement('div');
+    clientLine.classList.add('client-line');
+
     const linkElement = document.createElement('a');
-    linkElement.setAttribute('href', '#');
     linkElement.setAttribute('data-client-id', `${clientObj["id"]}`);
+    linkElement.setAttribute('href', `/clients/${clientObj["id"]}`);
     linkElement.classList.add('link-client');
 
     const divElement = document.createElement('div');
@@ -47,39 +66,50 @@ function clientCreateElement(clientObj) {
     btnEdit.setAttribute('type', 'button');
     btnEdit.innerText = "Editar";
 
-    
-
     btnDelete.addEventListener('click', async () => {
-        elementsList.currentClient = linkElement.getAttribute('data-client-id');
         const confirmed = await confirmMessage("Deseja mesmo deletar cliente?", true);
 
         if(confirmed) {
-            elementsList.currentEvent = "delete";
+            elementsList.currentClient = linkElement.getAttribute('data-client-id');
+            const response = await clientDelete(elementsList.currentClient);
+            if(response.sucesse){
+                elementsList.clientsList = elementsList.clientsList.filter(client => client.id != elementsList.currentClient);
+                showMessage("Cliente deletado com sucesso!");
+                clientCreateHTML()
+            } else {
+                showMessage("Erro ao tentar deletar cliente!", true);
+            }
         } else {
-            elementsList.currentEvent = null;
+            elementsList.currentClient = null;
         }
     })
 
     btnEdit.addEventListener('click', async () => {
-        elementsList.currentClient = linkElement.getAttribute('data-client-id');
         const confirmed = await confirmMessage("Deseja mesmo editar cliente?", true);
 
         if(confirmed) {
-            elementsList.currentEvent = "edit";
+            elementsList.currentClient = linkElement.getAttribute('data-client-id');
+            const data = await clientGet(elementsList.currentClient);
+            if(data.sucesse){
+                clientIsUpdate(data.clients[0]);
+            } else {
+                showMessage(data.errors, true);
+            } 
         } else {
-            elementsList.currentEvent = null;
+            elementsList.currentClient = null;
         }
     })
 
     btnField.append(btnDelete);
     btnField.append(btnEdit);
-    divElement.append(btnField);
     linkElement.append(divElement);
+    clientLine.append(linkElement);
+    clientLine.append(btnField);
 
-    elementsList.clientsListHTML.append(linkElement);
+    elementsList.clientsListHTML.append(clientLine);
 }
 
-export function clientRender(clientsList) {
+function clientRender(clientsList) {
     clientsList.forEach(clientObj => {
         elementsList.clientsList.unshift(clientObj);
     });
@@ -87,13 +117,81 @@ export function clientRender(clientsList) {
 
 export function clientAddNew(clientNewObj) {
     elementsList.clientsList.unshift(clientNewObj);
-    elementsList.clientsListHTML.innerHTML = `
-    <div class="client-header-list">
-        <p>Nome</p>
-        <p>Empresa</p>
-        <p>Email</p>
-        <p>Telefone</p>
-        <p>Estado</p>
-    </div>`
     clientCreateHTML();
+}
+
+export function clientUpdateHTML(clientUpdated) {
+    elementsList.clientsList = elementsList.clientsList.map(client => {
+        if(client.id == clientUpdated.id) return clientUpdated;
+        return client;
+    });
+
+    clientCreateHTML();
+}
+
+export async function clientGetList() {
+    const list = await clientsList();
+
+    if(!list.sucesse){
+        showMessage("Erro ao tentar buscar clientes na base de dados.", true);
+    } else if (Object(list).length <= 0) {
+        console.log("ok");
+    } else {
+        clientRender(list.clients);
+        clientCreateHTML();
+    }
+}
+
+function applyFilter() {
+    elementsList.clientListFilter = searchFilter();
+    elementsList.clientListFilter = statusFilter();
+}
+
+function statusFilter() {
+    const value = (elementsList.clientsSelectStatus.value).toLowerCase();
+    if(value !== ""){
+        const newList = elementsList.clientListFilter.filter(client => 
+            client.status == value
+        );
+        return newList;
+    } else {
+        return elementsList.clientListFilter;
+    }
+}
+
+function searchFilter() {
+    const value = (elementsList.clientsSearch.value).toLowerCase();
+    if(value !== ""){
+        const newList = elementsList.clientsList.filter(client => 
+            client.name.toLowerCase().includes(value)
+        );
+        return newList;
+    } else {
+        return elementsList.clientsList;
+    }
+}
+
+export function clientsMetrics() {
+    const data = {}
+    
+    data["total"] = elementsList.clientsList.length;
+    data["ativos"] = elementsList.clientsList.filter(client => client.status == 'lead').length;
+    data["fechados"] = elementsList.clientsList.filter(client => client.status == 'cliente').length;
+    data["perdidos"] = elementsList.clientsList.filter(client => client.status == 'perdido').length;
+    data["conversao"] = data.total > 0 ? (data["fechados"] / data["total"]) * 100 : 0;
+    data["pendentes"] = 0;
+    data["atrasadas"] = 0;
+    data["interacoes"] = 0;
+
+    return data
+}
+
+// ================================ EVENTS ================================
+export function clientListEvents() {
+    if(elementsList.clientsSearch){
+        elementsList.clientsSearch.addEventListener('input', clientCreateHTML);
+    }
+    if(elementsList.clientsSelectStatus){
+        elementsList.clientsSelectStatus.addEventListener('input', clientCreateHTML);
+    }
 }

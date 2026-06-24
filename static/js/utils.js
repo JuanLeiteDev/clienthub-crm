@@ -49,11 +49,16 @@ export function showMessage(msg, error=false, btnField=false) {
         myTimer = setTimeout(() => {
             elementsUtils.msgBlock.classList.add('invisible');
             myTimer = null;
-        }, 3000)
+        }, 2000)
     }
 }
 
 export function confirmMessage(msg, error=false) {
+    if(confirmResolver){
+        confirmResolver(false);
+        confirmResolver = null;
+    }
+    
     return new Promise(resolve => {
         showMessage(msg, error, true);
         confirmResolver = resolve;

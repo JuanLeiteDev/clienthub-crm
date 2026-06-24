@@ -15,7 +15,7 @@
 {% endblock header %}
 
 {% block main %}
-    {% include "./partials/main.html" %}
+    {% include "./partials/client_page.html" %}
 {% endblock main %}
 
 {% block footer %}
@@ -23,6 +23,5 @@
 {% endblock footer %}
 
 {% block module %}
-    <script type="module" src="{{ url_for('static', filename='js/home.js') }}"></script> 
+    <script type="module" src="{{ url_for('static', filename='js/client_page.js') }}"></script> 
 {% endblock module %}
-

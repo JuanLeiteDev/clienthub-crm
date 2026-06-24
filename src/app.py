@@ -7,6 +7,7 @@ from email_validator import validate_email
 app = Flask(__file__)
 
 STATUS = ['lead', 'em contato', 'cliente', 'perdido']
+clients_list = []
 
 database.init_db()
 
@@ -82,13 +83,22 @@ def update_client(id: int):
 @app.route("/api/clients/<id>", methods=["DELETE"])
 def delete_client(id: int):
     if not id: return jsonify({"sucesse": False, "errors": "ID do cliente não especificado."}), 400
+
     try:
         id = int(id)
     except Exception:
         return jsonify({"sucesse": False, "errors": "ID do cliente inválido."}), 400
     
-    if database.delete_client(id): return jsonify({"sucesse": True}), 204
+    if database.delete_client(id): return jsonify({"sucesse": True}), 200
     else: return jsonify({"sucesse": False, "errors": "Cliente não encontrado."}), 404
+
+@app.route("/clients/<id>", methods=["GET"])
+def client_page(id: int):
+    client = database.get_one_client(id)
+    if not client:
+        return "Cliente não encontrado", 404
+    
+    return render_template("client.html", client=client[0])
 
 def validate_client(data):
     errors = {}

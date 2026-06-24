@@ -1,0 +1,69 @@
+<main 
+    id="client-page"
+    data-client-id="{{ client.id or '' }}"
+    data-client-name="{{ client.name or '' }}"
+    data-client-enterprise="{{ client.enterprise or '' }}"
+    data-client-email="{{ client.email or '' }}"
+    data-client-phone="{{ client.phone or '' }}"
+    data-client-status="{{ client.status or '' }}"
+>
+    <section id="client-profile">
+        {% set status_class = client.status|lower|replace(' ', '-') if client.status else 'empty' %}
+
+        <div class="client-profile-header">
+            <div>
+                <p class="client-profile-id">Cliente #{{ client.id or "N/A" }}</p>
+                <h1>{{ client.name or "Cliente sem nome" }}</h1>
+                <p class="client-profile-enterprise">{{ client.enterprise or "Empresa não informada" }}</p>
+            </div>
+            <span class="client-status status-{{ status_class }}">
+                {{ client.status or "Sem estado" }}
+            </span>
+        </div>
+
+        <div class="client-actions">
+            <button type="button" id="btn-edit-client-page" class="client-action-btn btn-edit-client">
+                <i class="fa-solid fa-pen"></i>
+                <span>Editar</span>
+            </button>
+            <button type="button" id="btn-delete-client-page" class="client-action-btn btn-delete-client">
+                <i class="fa-solid fa-trash"></i>
+                <span>Deletar</span>
+            </button>
+        </div>
+
+        <div class="client-details">
+            <div class="client-detail-item">
+                <span>Email</span>
+                {% if client.email %}
+                    <a href="mailto:{{ client.email }}">{{ client.email }}</a>
+                {% else %}
+                    <p>Não informado</p>
+                {% endif %}
+            </div>
+
+            <div class="client-detail-item">
+                <span>Telefone</span>
+                {% if client.phone %}
+                    <a href="tel:{{ client.phone }}">{{ client.phone }}</a>
+                {% else %}
+                    <p>Não informado</p>
+                {% endif %}
+            </div>
+
+            <div class="client-detail-item">
+                <span>Empresa</span>
+                <p>{{ client.enterprise or "Não informada" }}</p>
+            </div>
+
+            <div class="client-detail-item">
+                <span>Criado em</span>
+                <p>{{ client.created_at or "Não informado" }}</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="client-page-form" class="client-page-form-hidden">
+        {% include "partials/client_form.html" %}
+    </section>
+</main>

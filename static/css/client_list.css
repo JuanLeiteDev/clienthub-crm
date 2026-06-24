@@ -80,7 +80,13 @@
     position: relative;
 }
 
+.client-line {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
 .link-client {
+    grid-column: 1 / 2;
     text-decoration: none;
 }
 
@@ -93,7 +99,7 @@
 .client-card {
     padding: 10px 0;
     display: grid;
-    grid-template-columns: repeat(6, 200px);
+    grid-template-columns: repeat(5, 200px);
     word-break: break-word;
     color: var(--color-text);
     justify-items: center;
@@ -112,9 +118,10 @@
 }
 
 .client-btn-list {
+    grid-column: 2 / -1;
     display: flex;
     justify-content: space-around;
-    align-content: center;
+    align-items: center;
     width: 100%;
 }
 
@@ -123,6 +130,7 @@
     width: 80px;
     padding: 5px 15px;
     border-radius: 5px;
+    height: 35px;
 }
 
 .btn-delete {
